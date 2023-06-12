@@ -1,26 +1,59 @@
-import React from "react";
+import React , {useState} from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+	const [inputValue , setInputValue] = useState("")
+	const [todos , setTodos] = useState([]);
+	return(
+		<div className="cointainer">
+			<h1>My To-DO</h1>
+			<ul>
+				<li>
+					<input
+					type="text"
+					onChange={(e) => setInputValue(e.target.value)}
+					value={inputValue}
+					onKeyPress={(e) =>{
+						if(e.key === "Enter"){
+							setTodos(todos.concat([inputValue ]));
+							setInputValue("")
+						}
+					}}
+					placeholder="What do you need to do ?"></input>
+
+				</li>
+				{todos.map((item , index ) => (
+					<li>
+						{item}{""}
+						<span onClick={() =>
+							setTodos(
+								todos.filter(
+									(t , currentIndex) =>
+									index != currentIndex
+								)
+							)}>
+							<FontAwesomeIcon icon={faTrash} />
+							
+						</span>
+					</li>
+				))}
+				
+				
+			</ul>
+			<div> 25 task</div>
+
+		 	
 		</div>
-	);
-};
+
+	)
+}
 
 export default Home;
+
+
+{/* <FontAwesomeIcon icon={faTrash} /> */}
